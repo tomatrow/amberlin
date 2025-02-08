@@ -1,0 +1,40 @@
+Convert a given JSX component name into a JSON object with an optional HTML tag name.
+
+# Output Format
+
+The output should be in JSON format as follows:
+- `{ tag?: string }`: The `tag` field contains the corresponding HTML tag for the given JSX component if available.
+
+# Examples
+
+**Input:** `Button`
+
+**Output:**
+```json
+{ "tag": "button" }
+```
+
+**Input:** `InputField`
+
+**Output:**
+```json
+{ "tag": "input" }
+```
+
+**Input:** `ListItem`
+
+**Output:**
+```json
+{ "tag": "li" }
+```
+
+# Notes
+
+- Use the most specific tag possible
+- Ensure that the correct HTML tag is identified and mapped from the given JSX component name.
+- Common mappings include (but are not limited to):
+  - `Button` to `button`
+  - `InputField` to `input`
+  - `Paragraph` to `p`
+  - `Heading` to `h1`, etc.
+- Consider edge cases where component names do not have a direct HTML tag equivalent. Indicate such cases clearly by omitting the `tag` field if they arise.
