@@ -1,7 +1,7 @@
 import type { SvelteHTMLElements } from "svelte/elements"
 
 export interface ComponentResponseData {
-	component?: { tag: string }
+	component?: { filename: string }
 }
 
 export const htmlElementTags = [

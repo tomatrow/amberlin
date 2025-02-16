@@ -1,23 +1,29 @@
 <script lang="ts">
 	import type { Snippet } from "svelte"
 	import { useComponentName } from "./setComponentName.js"
-	import { getComponentData } from "$lib/amberlinClient"
+	import { AmberlynClient } from "$lib/amberlinClient"
 
-	const {
-		children
-	}: {
+	const props: {
 		children?: Snippet
 	} = $props()
 
 	const componentName = useComponentName()
 
-	let tag = $state<keyof SvelteHTMLElements>("div")
+	let GeneratedComponent: any = $state()
 
 	async function loadComponent() {
 		if (!componentName) return
-		const { component } = await getComponentData(componentName)
+
+		const client = new AmberlynClient()
+
+		const { component } = (await client.getComponent(componentName, props)) ?? {}
 		if (!component) return
-		tag = component.tag
+
+		import(component.filename)
+			.then((module) => {
+				GeneratedComponent = module.default
+			})
+			.catch(console.error)
 	}
 
 	$effect(() => {
@@ -25,10 +31,6 @@
 	})
 </script>
 
-{#if tag}
-	<svelte:boundary>
-		<svelte:element this={tag}>
-			{@render children?.()}
-		</svelte:element>
-	</svelte:boundary>
+{#if GeneratedComponent}
+	<svelte:boundary><GeneratedComponent {...props} /></svelte:boundary>
 {/if}
