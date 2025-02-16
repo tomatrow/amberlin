@@ -33,4 +33,6 @@
 
 {#if GeneratedComponent}
 	<svelte:boundary><GeneratedComponent {...props} /></svelte:boundary>
+{:else}
+	<p>loading... {componentName}</p>
 {/if}

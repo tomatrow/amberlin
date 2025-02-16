@@ -26,12 +26,17 @@ export function describeValueType(value: any): string {
 	}
 }
 
-export function describeProps(value: Record<string, any>): string {
-	return `{ 
-		${Object.entries(value)
+export function describeProps(props: Record<string, any>): string {
+	let propsDescription = `{ 
+		${Object.entries(props)
+			.filter(([prop]) => prop !== "$")
 			.map(([prop, value]) => `${prop}: ${describeValueType(value)}`)
 			.join("\n")} 
 	}`
+
+	if (typeof props.$ === "string" && props.$) propsDescription + `\n Instruction: ${props.$}`
+
+	return propsDescription
 }
 
 export function getComponentFileName(componentName: string, componentProps: Record<string, any>) {

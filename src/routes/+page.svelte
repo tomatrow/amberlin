@@ -2,21 +2,21 @@
 	import { A } from "$lib/components"
 </script>
 
-<A.Title label="hello" />
+<svelte:head>
+	<link rel="stylesheet" href="https://unpkg.com/simpledotcss/simple.css" />
+</svelte:head>
 
-<A.Heading>Hello</A.Heading>
+<main>
+	<A.Heading animation="">
+		Amberlyn
+		{#snippet subtitle()}
+			Generated components from name and props
+		{/snippet}
+	</A.Heading>
 
-<A.PopupModal openButtonLabel="open">
-	<A.Prose useProseStyles>
-		<p>This is a modal...</p>
-	</A.Prose>
-</A.PopupModal>
-
-<A.Hero bg="red" height="10rem">
-	{#snippet header()}
-		Acquisitions Incorperated
-	{/snippet}
-	{#snippet footer()}
-		Call us
-	{/snippet}
-</A.Hero>
+	<A.Hero height="50dvh" tag="section">
+		<A.Modal openButtonLabel="open" $="fly in the popup">
+			<p>This is a modal...</p>
+		</A.Modal>
+	</A.Hero>
+</main>
